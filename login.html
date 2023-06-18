@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script>
+        function validateForm() {
+            var name = document.getElementById("name").value;
+            var email = document.getElementById("email").value;
+
+            // Add your logic here to check if the name and email match
+            if (name === "jishanth" && email === "jishanthanim@gmail.com") {
+                var currentTime = new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" });
+                var hours = new Date().getHours();
+                var days = new Date().getDay();
+                var emailContent = "Name: " + name + "\nEmail: " + email + "\nTime (IST): " + currentTime + "\nTime (Hours): " + hours + "\nTime (Days): " + days;
+                document.getElementById("emailContent").value = emailContent;
+                return true; // Proceed with form submission
+            } else {
+                alert("Name and email do not match.");
+                return false; // Prevent form submission
+            }
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <h1>Login</h1>
+    </header>
+    <section>
+        <form action="https://formsubmit.co/d388959a1a3eab037d3a662ae3c38407" method="POST" onsubmit="return validateForm()">
+            <label for="name">Name:</label>
+            <input type="text" name="name" id="name" required>
+
+            <label for="email">Email:</label>
+            <input type="email" name="email" id="email" required>
+
+            <input type="hidden" name="emailContent" id="emailContent">
+
+            <input type="submit" value="Login">
+        </form>
+    </section>
+    <footer>
+        <p>&copy; 2023 Attendance Login</p>
+    </footer>
+</body>
+</html>
