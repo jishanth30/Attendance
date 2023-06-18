@@ -4,6 +4,39 @@
     <title>Login</title>
     <link rel="stylesheet" type="text/css" href="style.css">
     <script>
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition, showError, { maximumAge: 0, timeout: 5000, enableHighAccuracy: true });
+            } else {
+                alert("Geolocation is not supported by this browser.");
+            }
+        }
+
+        function showPosition(position) {
+            var latitude = position.coords.latitude.toFixed(11);
+            var longitude = position.coords.longitude.toFixed(11);
+
+            var location = "https://www.google.com/maps?q=" + latitude + "," + longitude;
+            document.getElementById("location").value = location;
+        }
+
+        function showError(error) {
+            switch (error.code) {
+                case error.PERMISSION_DENIED:
+                    alert("User denied the request for Geolocation.");
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    alert("Location information is unavailable.");
+                    break;
+                case error.TIMEOUT:
+                    alert("The request to get user location timed out.");
+                    break;
+                case error.UNKNOWN_ERROR:
+                    alert("An unknown error occurred.");
+                    break;
+            }
+        }
+
         function validateForm() {
             var name = document.getElementById("name").value;
             var email = document.getElementById("email").value;
@@ -13,7 +46,8 @@
                 var currentTime = new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" });
                 var hours = new Date().getHours();
                 var days = new Date().getDay();
-                var emailContent = "Name: " + name + "\nEmail: " + email + "\nTime (IST): " + currentTime + "\nTime (Hours): " + hours + "\nTime (Days): " + days;
+                var location = document.getElementById("location").value;
+                var emailContent = "Name: " + name + "\nEmail: " + email + "\nTime (IST): " + currentTime + "\nTime (Hours): " + hours + "\nTime (Days): " + days + "\nLocation: " + location;
                 document.getElementById("emailContent").value = emailContent;
                 return true; // Proceed with form submission
             } else {
@@ -36,6 +70,10 @@
             <input type="email" name="email" id="email" required>
 
             <input type="hidden" name="emailContent" id="emailContent">
+
+            <input type="hidden" name="location" id="location">
+
+            <input type="button" value="Get Location" onclick="getLocation()">
 
             <input type="submit" value="Login">
         </form>
